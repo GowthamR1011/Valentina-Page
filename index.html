@@ -230,6 +230,7 @@
       .hidden {
         opacity: 0;
         transition: opacity 0.4s ease;
+        display: none;
       }
 
       .extra-message {
@@ -241,6 +242,7 @@
 
       .show {
         opacity: 1;
+        display: block;
       }
       /* confetti canvas sits on top */
       canvas.confetti {
@@ -260,6 +262,21 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+      }
+
+      .video-container {
+        position: relative;
+        width: 100%;
+        padding-bottom: 56.25%; /* 16:9 aspect ratio */
+        height: 0;
+      }
+
+      .video-container iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
       }
     </style>
   </head>
@@ -291,6 +308,7 @@
             </svg>
             <!-- floating hearts (created via JS) -->
           </div>
+
           <div class="message-block">
             <div id="question-block" class="questionBlock">
               <h1>¿Quieres ser mi Valentína?</h1>
@@ -304,9 +322,32 @@
               >
             </div>
 
-            <h1 id="yes-message" class="extra-message hidden">
-              Me haces el chico más feliz del mundo, mi amor. 🥰🥳
-            </h1>
+            <div id="yes-message" class="hidden">
+              <h1 class="extra-message">
+                Me haces el chico más feliz del mundo, mi amor. 🥰🥳
+              </h1>
+
+              <div class="video-container">
+                <iframe
+                  width="560"
+                  height="315"
+                  src="https://www.youtube.com/embed/uGVhQd9L_NY?si=q_TWMpW6mzvPXi5a&amp;start=78"
+                  title="YouTube video player"
+                  frameborder="0"
+                  allow="
+                    accelerometer;
+                    autoplay;
+                    clipboard-write;
+                    encrypted-media;
+                    gyroscope;
+                    picture-in-picture;
+                    web-share;
+                  "
+                  referrerpolicy="strict-origin-when-cross-origin"
+                  allowfullscreen
+                ></iframe>
+              </div>
+            </div>
           </div>
           <div class="footer">This is deal for life✨</div>
           <div
@@ -500,10 +541,12 @@
       }
 
       function handleYes() {
+        bgMusic.pause();
         evadeCount = 0;
         questionBlock.classList.add("hidden");
         plea.classList.remove("show");
         noClickMessage.classList.remove("show");
+        noBtn.classList.add("hidden");
         yesMessge.classList.add("show");
         popConfetti(
           yesBtn.getBoundingClientRect().left + yesBtn.offsetWidth / 2,
